@@ -2,6 +2,7 @@
 #include<algorithm>
 #include<ranges>
 #include<type_traits>
+#include<iostream>
 
 #include "Board.h"
 
@@ -45,12 +46,14 @@ Board::Board()
     eight_bomb_texture.loadFromFile("eight_bomb_sprite.png");
     eight_bomb_sprite.setTexture(eight_bomb_texture);
 
+    std::cout << "finished setting up the sprites.\n";
+
     // second initialize all of the vectors
-    for (auto x : std::ranges::views::iota(10))
+    for (int x = 0; x < 10; x++)
     {
         std::vector<int> temporary_user{};
         std::vector<int> temporary_uncovered{};
-        for (auto y : std::ranges::views::iota(10))
+        for (int y = 0; y < 10; y++)
         {
             temporary_user.push_back(0);
             temporary_uncovered.push_back(1);
@@ -59,8 +62,10 @@ Board::Board()
         uncovered_board.push_back(temporary_uncovered);
     }
 
-	// third get 8 random positions to put in the board which represent the bombs
-    for (auto i : std::ranges::views::iota(8))
+    std::cout << "finished initializing the vectors\n";
+
+	// third get 10 random positions to put in the board which represent the bombs
+    for (int i = 0; i < 10; i++)
     {
         auto RandomX = RandomNumber();
         auto RandomY = RandomNumber();
@@ -68,32 +73,42 @@ Board::Board()
         uncovered_board[RandomX][RandomY] = 3;
     }
 
+    std::cout << "finished putting the bombs in the uncovered_board vector.\n";
+
     // fourth fill in the numbers for the grid, how many bombs are neighbouring the cell in the grid
     int total_bomb_count = 0;
 
     for (int i = 0; i < uncovered_board.size(); i++)
     {
-        for (int j = 0; j < uncovered_board[i].size(); i++)
+        std::cout << "\n" << i << "\n\t";
+        for (int j = 0; j < uncovered_board[i].size(); j++)
         {
+            std::cout << j << " ";
             if ((j - 1) >= 0) { if (uncovered_board[i][j - 1] == 3) { total_bomb_count += 1; } }
             if ((j + 1) <= 9) { if (uncovered_board[i][j + 1] == 3) { total_bomb_count += 1; } }
             if ((i - 1) >= 0) { if (uncovered_board[i - 1][j] == 3) { total_bomb_count += 1; } }
             if ((i + 1) <= 9) { if (uncovered_board[i + 1][j] == 3) { total_bomb_count += 1; } }
 
-            if ((j - 1) >= 0 && (i - 1) >= 0) { if (uncovered_board[i - 1][j - 1] == 3) { total_bomb_count += 1; } }
-            if ((j + 1) <= 9 && (i + 1) <= 9) { if (uncovered_board[i + 1][j + 1] == 3) { total_bomb_count += 1; } }
-            if ((i - 1) >= 0 && (j + 1) <= 9) { if (uncovered_board[i - 1][j + 1] == 3) { total_bomb_count += 1; } }
-            if ((i + 1) <= 9 && (j - 1) >= 0) { if (uncovered_board[i + 1][j - 1] == 3) { total_bomb_count += 1; } }
-
-            uncovered_board[i][j] = total_bomb_count + 4;
+            if (((j - 1) >= 0) && ((i - 1) >= 0)) { if (uncovered_board[i - 1][j - 1] == 3) { total_bomb_count += 1; } }
+            if (((j + 1) <= 9) && ((i + 1) <= 9)) { if (uncovered_board[i + 1][j + 1] == 3) { total_bomb_count += 1; } }
+            if (((i - 1) >= 0) && ((j + 1) <= 9)) { if (uncovered_board[i - 1][j + 1] == 3) { total_bomb_count += 1; } }
+            if (((i + 1) <= 9) && ((j - 1) >= 0)) { if (uncovered_board[i + 1][j - 1] == 3) { total_bomb_count += 1; } }
+            if (uncovered_board[i][j] != 3)
+            {
+                uncovered_board[i][j] = total_bomb_count + 4;
+            }
+            total_bomb_count = 0;
         }
+        total_bomb_count = 0;
     }
+
+    std::cout << "finished filling the numbers in the grid.\n";
 }
 
 auto Board::draw(sf::RenderWindow& window) const noexcept -> void
 {
-    int current_x = 0;
-    int current_y = 0;
+    //int current_x = 0;
+    //int current_y = 0;
     //for (int i = 0; i < uncovered_board.size(); i++)
     //{
     //    for (int j = 0; j < uncovered_board[i].size(); i++)
@@ -129,23 +144,23 @@ auto Board::draw(sf::RenderWindow& window) const noexcept -> void
             else if (uncovered_board[i][j] == 11) { sf::Sprite copy_of_sprite = seven_bomb_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
             else if (uncovered_board[i][j] == 12) { sf::Sprite copy_of_sprite = eight_bomb_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
 
-            current_x += 25.f;
+            current_x += 10.f;
         }
         current_x = 0.f;
-        current_y += 25.f;
+        current_y += 10.f;
     }
 }
 
 auto Board::HasGameFinished() -> bool
 {
-    return amount_of_land_uncovered == 0;
+    return amount_of_land_uncovered == 100;
 }
 
 auto Board::RandomNumber() -> int
 {
     std::random_device dev;
     std::mt19937 rng(dev());
-    std::uniform_int_distribution<std::mt19937::result_type> dist6(0, 9); // distribution in range [1, 10]
+    std::uniform_int_distribution<std::mt19937::result_type> dist6(0, 8); // distribution in range [1, 10]
 
     return dist6(rng);
 }
