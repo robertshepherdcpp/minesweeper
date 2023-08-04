@@ -15,6 +15,8 @@ struct Board
 	auto HasGameFinished() -> bool;
 	auto RandomNumber() -> int;
 
+	auto blow_up_all_bombs() -> void;
+
 	std::vector<std::vector<int>> uncovered_board{};
 	std::vector<std::vector<int>> user_board{};
 	std::vector<float> sprite_positions_x{};
@@ -33,4 +35,5 @@ struct Board
 	sf::Texture eight_bomb_texture; sf::Sprite eight_bomb_sprite;
 
 	int amount_of_land_uncovered = 0;
+	bool game_over = false;
 };

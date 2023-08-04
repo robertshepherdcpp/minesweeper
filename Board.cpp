@@ -105,6 +105,28 @@ Board::Board()
     std::cout << "finished filling the numbers in the grid.\n";
 }
 
+auto Board::HandleMouseClicked(sf::Event& e) -> void
+{
+    if (!game_over)
+    {
+        auto positionOfMouseX = e.mouseButton.x;
+        auto positionOfMouseY = e.mouseButton.y;
+
+        int vectorPositionJ = ((positionOfMouseX - (positionOfMouseX % 10)) / 10);
+        int vectorPositionI = ((positionOfMouseY - (positionOfMouseY % 10)) / 10);
+
+        user_board[vectorPositionI][vectorPositionJ] = uncovered_board[vectorPositionI][vectorPositionJ];
+
+        if (uncovered_board[vectorPositionI][vectorPositionJ] == 3)
+        {
+            game_over = true;
+            blow_up_all_bombs();
+        }
+
+        amount_of_land_uncovered += 1;
+    }
+}
+
 auto Board::draw(sf::RenderWindow& window) const noexcept -> void
 {
     //int current_x = 0;
@@ -126,23 +148,23 @@ auto Board::draw(sf::RenderWindow& window) const noexcept -> void
     float current_x = 0.f;
     float current_y = 0.f;
 
-    for (int i = 0; i < uncovered_board.size(); i++)
+    for (int i = 0; i < user_board.size(); i++)
     {
-        for (int j = 0; j < uncovered_board[i].size(); j++)
+        for (int j = 0; j < user_board[i].size(); j++)
         {
-            if (uncovered_board[i][j] == 100) {}
-            else if (uncovered_board[i][j] == 0) { sf::Sprite copy_of_sprite = covered_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
-            else if (uncovered_board[i][j] == 1)  { sf::Sprite copy_of_sprite = nothing_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
-            else if (uncovered_board[i][j] == 3)  { sf::Sprite copy_of_sprite = bomb_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
-            else if (uncovered_board[i][j] == 4)  { sf::Sprite copy_of_sprite = nothing_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
-            else if (uncovered_board[i][j] == 5)  { sf::Sprite copy_of_sprite = one_bomb_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
-            else if (uncovered_board[i][j] == 6)  { sf::Sprite copy_of_sprite = two_bomb_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
-            else if (uncovered_board[i][j] == 7)  { sf::Sprite copy_of_sprite = three_bomb_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
-            else if (uncovered_board[i][j] == 8)  { sf::Sprite copy_of_sprite = four_bomb_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
-            else if (uncovered_board[i][j] == 9)  { sf::Sprite copy_of_sprite = five_bomb_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
-            else if (uncovered_board[i][j] == 10) { sf::Sprite copy_of_sprite = six_bomb_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
-            else if (uncovered_board[i][j] == 11) { sf::Sprite copy_of_sprite = seven_bomb_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
-            else if (uncovered_board[i][j] == 12) { sf::Sprite copy_of_sprite = eight_bomb_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
+            if (user_board[i][j] == 100) {}
+            else if (user_board[i][j] == 0) { sf::Sprite copy_of_sprite = covered_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
+            else if (user_board[i][j] == 1)  { sf::Sprite copy_of_sprite = nothing_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
+            else if (user_board[i][j] == 3)  { sf::Sprite copy_of_sprite = bomb_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
+            else if (user_board[i][j] == 4)  { sf::Sprite copy_of_sprite = nothing_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
+            else if (user_board[i][j] == 5)  { sf::Sprite copy_of_sprite = one_bomb_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
+            else if (user_board[i][j] == 6)  { sf::Sprite copy_of_sprite = two_bomb_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
+            else if (user_board[i][j] == 7)  { sf::Sprite copy_of_sprite = three_bomb_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
+            else if (user_board[i][j] == 8)  { sf::Sprite copy_of_sprite = four_bomb_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
+            else if (user_board[i][j] == 9)  { sf::Sprite copy_of_sprite = five_bomb_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
+            else if (user_board[i][j] == 10) { sf::Sprite copy_of_sprite = six_bomb_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
+            else if (user_board[i][j] == 11) { sf::Sprite copy_of_sprite = seven_bomb_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
+            else if (user_board[i][j] == 12) { sf::Sprite copy_of_sprite = eight_bomb_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
 
             current_x += 10.f;
         }
@@ -163,4 +185,18 @@ auto Board::RandomNumber() -> int
     std::uniform_int_distribution<std::mt19937::result_type> dist6(0, 8); // distribution in range [1, 10]
 
     return dist6(rng);
+}
+
+auto Board::blow_up_all_bombs() -> void
+{
+    for (int i = 0; i < user_board.size(); i++)
+    {
+        for (int j = 0; j < user_board[i].size(); j++)
+        {
+            if (uncovered_board[i][j] == 3)
+            {
+                user_board[i][j] = uncovered_board[i][j];
+            }
+        }
+    }
 }
