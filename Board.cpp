@@ -103,6 +103,25 @@ Board::Board()
     }
 
     std::cout << "finished filling the numbers in the grid.\n";
+
+    // fifth, we uncover some blocks in the user_board, so that they can start somewhere.
+
+    for (int i = 0; i < 6; i++)
+    {
+        auto RandomX = RandomNumber();
+        auto RandomY = RandomNumber();
+
+        if (uncovered_board[RandomX][RandomY] != 3)
+        {
+            user_board[RandomX][RandomY] = uncovered_board[RandomX][RandomY];
+        }
+        else
+        {
+            i -= 1;
+        }
+    }
+
+    std::cout << "finished uncovering 5 random blocks in the user_board.\n";
 }
 
 auto Board::HandleMouseClicked(sf::Event& e) -> void
