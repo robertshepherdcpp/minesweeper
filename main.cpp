@@ -10,15 +10,6 @@ int main()
 
     Board board;
 
-    for (auto i : board.uncovered_board)
-    {
-        for (auto j : i)
-        {
-            std::cout << j << " ";
-        }
-        std::cout << "\n";
-    }
-
     while (window.isOpen())
     {
         sf::Event event;
