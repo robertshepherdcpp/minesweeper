@@ -194,7 +194,7 @@ auto Board::draw(sf::RenderWindow& window) const noexcept -> void
 
 auto Board::HasGameFinished() -> bool
 {
-    return amount_of_land_uncovered == 100;
+    return amount_of_land_uncovered > 88;
 }
 
 auto Board::RandomNumber() -> int
