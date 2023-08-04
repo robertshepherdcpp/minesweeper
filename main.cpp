@@ -26,7 +26,7 @@ int main()
             }
             if (event.type == sf::Event::Resized)
             {
-                window.setSize(sf::Vector2u(150, 150))
+                window.setSize(sf::Vector2u(150, 150));
             }
         }
 
