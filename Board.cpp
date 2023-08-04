@@ -131,8 +131,8 @@ auto Board::HandleMouseClicked(sf::Event& e) -> void
         auto positionOfMouseX = e.mouseButton.x;
         auto positionOfMouseY = e.mouseButton.y;
 
-        int vectorPositionJ = ((positionOfMouseX - (positionOfMouseX % 10)) / 10);
-        int vectorPositionI = ((positionOfMouseY - (positionOfMouseY % 10)) / 10);
+        int vectorPositionJ = ((positionOfMouseX - (positionOfMouseX % bomb_texture.getSize().x)) / bomb_texture.getSize().x);
+        int vectorPositionI = ((positionOfMouseY - (positionOfMouseY % bomb_texture.getSize().y)) / bomb_texture.getSize().y);
 
         user_board[vectorPositionI][vectorPositionJ] = uncovered_board[vectorPositionI][vectorPositionJ];
 
@@ -185,10 +185,10 @@ auto Board::draw(sf::RenderWindow& window) const noexcept -> void
             else if (user_board[i][j] == 11) { sf::Sprite copy_of_sprite = seven_bomb_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
             else if (user_board[i][j] == 12) { sf::Sprite copy_of_sprite = eight_bomb_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
 
-            current_x += 10.f;
+            current_x += bomb_texture.getSize().x;
         }
         current_x = 0.f;
-        current_y += 10.f;
+        current_y += bomb_texture.getSize().y;
     }
 }
 
