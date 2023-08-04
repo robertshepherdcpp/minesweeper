@@ -219,3 +219,17 @@ auto Board::blow_up_all_bombs() -> void
         }
     }
 }
+
+auto Board::showAllNotBombs() -> void
+{
+    for (int i = 0; i < user_board.size(); i++)
+    {
+        for (int j = 0; j < user_board[i].size(); j++)
+        {
+            if (uncovered_board[i][j] != 3)
+            {
+                user_board[i][j] = uncovered_board[i][j];
+            }
+        }
+    }
+}

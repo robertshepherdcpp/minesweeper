@@ -16,6 +16,7 @@ struct Board
 	auto RandomNumber() -> int;
 
 	auto blow_up_all_bombs() -> void;
+	auto showAllNotBombs() -> void;
 
 	std::vector<std::vector<int>> uncovered_board{};
 	std::vector<std::vector<int>> user_board{};

@@ -21,7 +21,15 @@ int main()
             {
                 if (event.mouseButton.button == sf::Mouse::Left)
                 {
-                    board.HandleMouseClicked(event);
+                    if (!board.HasGameFinished())
+                    {
+                        board.HandleMouseClicked(event);
+                    }
+                    else
+                    {
+                        board.showAllNotBombs();
+                        board.game_over = true;
+                    }
                 }
             }
             if (event.type == sf::Event::Resized)
