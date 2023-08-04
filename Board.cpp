@@ -102,7 +102,7 @@ Board::Board()
         total_bomb_count = 0;
     }
 
-    std::cout << "finished filling the numbers in the grid.\n";
+    std::cout << "\nfinished filling the numbers in the grid.\n";
 
     // fifth, we uncover some blocks in the user_board, so that they can start somewhere.
 
