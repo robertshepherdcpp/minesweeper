@@ -17,6 +17,8 @@ struct Board
 
 	std::vector<std::vector<int>> uncovered_board{};
 	std::vector<std::vector<int>> user_board{};
+	std::vector<float> sprite_positions_x{};
+	std::vector<float> sprite_positions_y{};
 
 	sf::Texture bomb_texture; sf::Sprite bomb_sprite;
 	sf::Texture nothing_texture; sf::Sprite nothing_sprite;

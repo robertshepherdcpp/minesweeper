@@ -1,5 +1,7 @@
 #include <SFML/Graphics.hpp>
 
+#include<iostream>
+
 #include "Board.h"
 
 int main()
@@ -7,6 +9,15 @@ int main()
     sf::RenderWindow window(sf::VideoMode(1000, 1000), "SFML works!");
 
     Board board;
+
+    for (auto i : board.uncovered_board)
+    {
+        for (auto j : i)
+        {
+            std::cout << j << " ";
+        }
+        std::cout << "\n";
+    }
 
     while (window.isOpen())
     {

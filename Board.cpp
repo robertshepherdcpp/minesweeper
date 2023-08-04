@@ -1,6 +1,7 @@
 #include<random>
 #include<algorithm>
 #include<ranges>
+#include<type_traits>
 
 #include "Board.h"
 
@@ -91,24 +92,47 @@ Board::Board()
 
 auto Board::draw(sf::RenderWindow& window) const noexcept -> void
 {
-    for (auto i : uncovered_board)
+    int current_x = 0;
+    int current_y = 0;
+    //for (int i = 0; i < uncovered_board.size(); i++)
+    //{
+    //    for (int j = 0; j < uncovered_board[i].size(); i++)
+    //    {
+    //        sprite_positions_x.push_back(current_x);
+    //        sprite_positions_y.push_back(current_y);
+
+    //        current_x += 10;
+    //    }
+
+    //    current_y += 10;
+    //    current_x = 0;
+    //}
+
+    float current_x = 0.f;
+    float current_y = 0.f;
+
+    for (int i = 0; i < uncovered_board.size(); i++)
     {
-        for (auto j : i)
+        for (int j = 0; j < uncovered_board[i].size(); j++)
         {
-            if (j == 0) {}
-            else if (j == 1)  { window.draw(covered_sprite); }
-            else if (j == 2)  { window.draw(nothing_sprite); }
-            else if (j == 3)  { window.draw(bomb_sprite); }
-            else if (j == 4)  { window.draw(nothing_sprite); }
-            else if (j == 5)  { window.draw(one_bomb_sprite); }
-            else if (j == 6)  { window.draw(two_bomb_sprite); }
-            else if (j == 7)  { window.draw(three_bomb_sprite); }
-            else if (j == 8)  { window.draw(four_bomb_sprite); }
-            else if (j == 9)  { window.draw(five_bomb_sprite); }
-            else if (j == 10) { window.draw(six_bomb_sprite); }
-            else if (j == 11) { window.draw(seven_bomb_sprite); }
-            else if (j == 12) { window.draw(eight_bomb_sprite); }
+            if (uncovered_board[i][j] == 100) {}
+            else if (uncovered_board[i][j] == 0) { sf::Sprite copy_of_sprite = covered_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
+            else if (uncovered_board[i][j] == 1)  { sf::Sprite copy_of_sprite = nothing_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
+            else if (uncovered_board[i][j] == 3)  { sf::Sprite copy_of_sprite = bomb_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
+            else if (uncovered_board[i][j] == 4)  { sf::Sprite copy_of_sprite = nothing_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
+            else if (uncovered_board[i][j] == 5)  { sf::Sprite copy_of_sprite = one_bomb_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
+            else if (uncovered_board[i][j] == 6)  { sf::Sprite copy_of_sprite = two_bomb_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
+            else if (uncovered_board[i][j] == 7)  { sf::Sprite copy_of_sprite = three_bomb_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
+            else if (uncovered_board[i][j] == 8)  { sf::Sprite copy_of_sprite = four_bomb_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
+            else if (uncovered_board[i][j] == 9)  { sf::Sprite copy_of_sprite = five_bomb_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
+            else if (uncovered_board[i][j] == 10) { sf::Sprite copy_of_sprite = six_bomb_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
+            else if (uncovered_board[i][j] == 11) { sf::Sprite copy_of_sprite = seven_bomb_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
+            else if (uncovered_board[i][j] == 12) { sf::Sprite copy_of_sprite = eight_bomb_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
+
+            current_x += 25.f;
         }
+        current_x = 0.f;
+        current_y += 25.f;
     }
 }
 
