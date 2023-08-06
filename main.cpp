@@ -21,15 +21,12 @@ int main()
             {
                 if (event.mouseButton.button == sf::Mouse::Left)
                 {
-                    if (!board.HasGameFinished())
-                    {
                         board.HandleMouseClicked(event);
-                    }
-                    else
-                    {
-                        board.showAllNotBombs();
-                        board.game_over = true;
-                    }
+
+                        if (board.HasGameFinished())
+                        {
+                            window.setSize(sf::Vector2u(1000, 1000));
+                        }
                 }
             }
             if (event.type == sf::Event::Resized)

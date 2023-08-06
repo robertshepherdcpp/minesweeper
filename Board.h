@@ -37,4 +37,5 @@ struct Board
 
 	int amount_of_land_uncovered = 0;
 	bool game_over = false;
+	bool hundered_by_hundered = false;
 };

@@ -194,7 +194,95 @@ auto Board::draw(sf::RenderWindow& window) const noexcept -> void
 
 auto Board::HasGameFinished() -> bool
 {
-    return amount_of_land_uncovered > 88;
+    if (amount_of_land_uncovered > 8)
+    {
+        hundered_by_hundered = true;
+        uncovered_board.clear();
+        user_board.clear();
+        sprite_positions_x.clear();
+        sprite_positions_y.clear();
+
+
+        // second initialize all of the vectors
+        for (int x = 0; x < 100; x++)
+        {
+            std::vector<int> temporary_user{};
+            std::vector<int> temporary_uncovered{};
+            for (int y = 0; y < 100; y++)
+            {
+                temporary_user.push_back(0);
+                temporary_uncovered.push_back(1);
+            }
+            user_board.push_back(temporary_user);
+            uncovered_board.push_back(temporary_uncovered);
+        }
+
+        std::cout << "finished initializing the vectors\n";
+
+        // third get 10 random positions to put in the board which represent the bombs
+        for (int i = 0; i < 110; i++)
+        {
+            auto RandomX = RandomNumber();
+            auto RandomY = RandomNumber();
+
+            uncovered_board[RandomX][RandomY] = 3;
+        }
+
+        std::cout << "finished putting the bombs in the uncovered_board vector.\n";
+
+        // fourth fill in the numbers for the grid, how many bombs are neighbouring the cell in the grid
+        int total_bomb_count = 0;
+
+        for (int i = 0; i < uncovered_board.size(); i++)
+        {
+            std::cout << "\n" << i << "\n\t";
+            for (int j = 0; j < uncovered_board[i].size(); j++)
+            {
+                std::cout << j << " ";
+                if ((j - 1) >= 0) { if (uncovered_board[i][j - 1] == 3) { total_bomb_count += 1; } }
+                if ((j + 1) <= 99) { if (uncovered_board[i][j + 1] == 3) { total_bomb_count += 1; } }
+                if ((i - 1) >= 0) { if (uncovered_board[i - 1][j] == 3) { total_bomb_count += 1; } }
+                if ((i + 1) <= 99) { if (uncovered_board[i + 1][j] == 3) { total_bomb_count += 1; } }
+
+                if (((j - 1) >= 0) && ((i - 1) >= 0)) { if (uncovered_board[i - 1][j - 1] == 3) { total_bomb_count += 1; } }
+                if (((j + 1) <= 99) && ((i + 1) <= 99)) { if (uncovered_board[i + 1][j + 1] == 3) { total_bomb_count += 1; } }
+                if (((i - 1) >= 0) && ((j + 1) <= 99)) { if (uncovered_board[i - 1][j + 1] == 3) { total_bomb_count += 1; } }
+                if (((i + 1) <= 99) && ((j - 1) >= 0)) { if (uncovered_board[i + 1][j - 1] == 3) { total_bomb_count += 1; } }
+                if (uncovered_board[i][j] != 3)
+                {
+                    uncovered_board[i][j] = total_bomb_count + 4;
+                }
+                total_bomb_count = 0;
+            }
+            total_bomb_count = 0;
+        }
+
+        std::cout << "\nfinished filling the numbers in the grid.\n";
+
+        // fifth, we uncover some blocks in the user_board, so that they can start somewhere.
+
+        for (int i = 0; i < 60; i++)
+        {
+            auto RandomX = RandomNumber();
+            auto RandomY = RandomNumber();
+
+            if (uncovered_board[RandomX][RandomY] != 3)
+            {
+                user_board[RandomX][RandomY] = uncovered_board[RandomX][RandomY];
+            }
+            else
+            {
+                i -= 1;
+            }
+        }
+
+        std::cout << "finished uncovering 5 random blocks in the user_board.\n";
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 auto Board::RandomNumber() -> int
