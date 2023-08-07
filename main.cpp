@@ -23,7 +23,7 @@ int main()
                 {
                         board.HandleMouseClicked(event);
 
-                        if (board.HasGameFinished())
+                        if (board.HasGameFinished(window))
                         {
                             window.setSize(sf::Vector2u(1000, 1000));
                         }

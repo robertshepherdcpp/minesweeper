@@ -192,9 +192,9 @@ auto Board::draw(sf::RenderWindow& window) const noexcept -> void
     }
 }
 
-auto Board::HasGameFinished() -> bool
+auto Board::HasGameFinished(sf::RenderWindow& window) -> bool
 {
-    if (amount_of_land_uncovered > 88 && !hundered_by_hundered)
+    if (amount_of_land_uncovered > 8 && !hundered_by_hundered)
     {
         hundered_by_hundered = true;
         uncovered_board.clear();
@@ -202,6 +202,9 @@ auto Board::HasGameFinished() -> bool
         sprite_positions_x.clear();
         sprite_positions_y.clear();
 
+        // resize the window
+        window.clear();
+        window.setSize(sf::Vector2u(1000, 1000));
 
         // second initialize all of the vectors
         for (int x = 0; x < 100; x++)
@@ -287,11 +290,22 @@ auto Board::HasGameFinished() -> bool
 
 auto Board::RandomNumber() -> int
 {
-    std::random_device dev;
-    std::mt19937 rng(dev());
-    std::uniform_int_distribution<std::mt19937::result_type> dist6(0, 8); // distribution in range [1, 10]
+    if (!hundered_by_hundered)
+    {
+        std::random_device dev;
+        std::mt19937 rng(dev());
+        std::uniform_int_distribution<std::mt19937::result_type> dist6(0, 8); // distribution in range [1, 10]
 
-    return dist6(rng);
+        return dist6(rng);
+    }
+    else
+    {
+        std::random_device dev;
+        std::mt19937 rng(dev());
+        std::uniform_int_distribution<std::mt19937::result_type> dist6(0, 98); // distribution in range [1, 10]
+
+        return dist6(rng);
+    }
 }
 
 auto Board::blow_up_all_bombs() -> void

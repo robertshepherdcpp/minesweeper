@@ -12,7 +12,7 @@ struct Board
 
 	auto draw(sf::RenderWindow& window) const noexcept -> void;
 
-	auto HasGameFinished() -> bool;
+	auto HasGameFinished(sf::RenderWindow& window) -> bool;
 	auto RandomNumber() -> int;
 
 	auto blow_up_all_bombs() -> void;
