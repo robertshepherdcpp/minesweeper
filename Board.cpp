@@ -194,7 +194,7 @@ auto Board::draw(sf::RenderWindow& window) const noexcept -> void
 
 auto Board::HasGameFinished() -> bool
 {
-    if (amount_of_land_uncovered > 88)
+    if (amount_of_land_uncovered > 8 && !hundered_by_hundered)
     {
         hundered_by_hundered = true;
         uncovered_board.clear();

@@ -31,7 +31,14 @@ int main()
             }
             if (event.type == sf::Event::Resized)
             {
-                window.setSize(sf::Vector2u(150, 150));
+                if (!board.hundered_by_hundered)
+                {
+                    window.setSize(sf::Vector2u(150, 150));
+                }
+                else
+                {
+                    window.setSize(sf::Vector2u(1000, 1000));
+                }
             }
         }
 
