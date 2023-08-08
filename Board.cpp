@@ -172,7 +172,7 @@ auto Board::draw(sf::RenderWindow& window) const noexcept -> void
         for (int j = 0; j < user_board[i].size(); j++)
         {
             if (user_board[i][j] == 100) {}
-            else if (user_board[i][j] == 0) { sf::Sprite copy_of_sprite = covered_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
+            else if (user_board[i][j] == 0)  { sf::Sprite copy_of_sprite = covered_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
             else if (user_board[i][j] == 1)  { sf::Sprite copy_of_sprite = nothing_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
             else if (user_board[i][j] == 3)  { sf::Sprite copy_of_sprite = bomb_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
             else if (user_board[i][j] == 4)  { sf::Sprite copy_of_sprite = nothing_sprite;  copy_of_sprite.setPosition(current_x, current_y); window.draw(copy_of_sprite); }
