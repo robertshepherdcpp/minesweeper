@@ -223,7 +223,7 @@ auto Board::HasGameFinished(sf::RenderWindow& window) -> bool
         std::cout << "finished initializing the vectors\n";
 
         // third get 10 random positions to put in the board which represent the bombs
-        for (int i = 0; i < 110; i++)
+        for (int i = 0; i < 101; i++)
         {
             auto RandomX = RandomNumber();
             auto RandomY = RandomNumber();
